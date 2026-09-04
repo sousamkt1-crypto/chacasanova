@@ -73,7 +73,6 @@ export default function HomePage() {
       <div className="hero-panel relative mx-auto max-w-3xl px-5 py-10 text-center sm:px-12 sm:py-14">
         <div className="monogram" aria-label="J e L"><span>J</span><i /><span>L</span></div>
         <p className="mb-5 mt-5 text-xs font-semibold uppercase tracking-[0.32em] text-primary sm:text-sm">Um novo capítulo</p>
-        <h1 className="font-display text-5xl leading-[0.96] text-foreground sm:text-7xl">Chá de Casa Nova</h1>
         <div className="ornament" aria-hidden="true"><span /><Heart className="size-4 fill-current" /><span /></div>
         <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">Cada escolha ajuda a transformar uma casa em lar. Selecione um presente e faça parte deste momento tão especial.</p>
         <div className="availability-pill mx-auto mt-8 flex max-w-sm items-center gap-3 rounded-full px-5 py-3 text-sm">

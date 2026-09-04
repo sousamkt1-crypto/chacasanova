@@ -24,7 +24,7 @@ export async function GET() {
     const rows = await sql`SELECT item_id FROM gift_reservations ORDER BY created_at`;
     const reservationCounts: Record<string, number> = {};
     for (const row of rows) {
-      const baseId = String(row.item_id).replace(/#2$/, "");
+      const baseId = String(row.item_id).replace(/#\d+$/, "");
       reservationCounts[baseId] = (reservationCounts[baseId] ?? 0) + 1;
     }
     return Response.json({ reservationCounts });
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     const quantity = availableGifts.get(itemId);
     if (!quantity || !guestName || guestName.length > 80) return Response.json({ error: "Dados inválidos" }, { status: 400 });
     const sql = await ensureTable();
-    const reservationKeys = quantity === 2 ? [itemId, `${itemId}#2`] : [itemId];
+    const reservationKeys = Array.from({ length: quantity }, (_, index) => index === 0 ? itemId : `${itemId}#${index + 1}`);
     for (let index = 0; index < reservationKeys.length; index += 1) {
       const key = reservationKeys[index];
       const inserted = await sql`INSERT INTO gift_reservations (item_id, guest_name)
