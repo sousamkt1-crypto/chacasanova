@@ -1,6 +1,8 @@
 # Lista de Chá de Casa Nova
 
-Site interativo em Next.js, pronto para a Vercel. As reservas são salvas em um banco Neon Postgres e o mesmo presente não pode ser escolhido duas vezes.
+Site interativo em Next.js, pronto para a Vercel. As reservas são salvas em um banco Neon Postgres e cada presente respeita o limite configurado na lista.
+
+Alguns itens aceitam duas reservas. Depois da primeira escolha, o site mostra que ainda existe uma unidade disponível; depois da segunda, o item aparece como esgotado.
 
 ## Publicação rápida na Vercel
 
