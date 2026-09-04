@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Gift, Home, Loader2, Palette, Search, Sparkles, X } from "lucide-react";
+import { Check, Gift, Heart, Loader2, Palette, Search, Sparkles, X } from "lucide-react";
 import { categories, type GiftItem } from "@/lib/gifts";
 
 type Notice = { text: string; error?: boolean } | null;
@@ -68,16 +68,16 @@ export default function HomePage() {
 
   return <main className="min-h-screen overflow-hidden">
     {notice && <div className={`toast-message ${notice.error ? "error" : ""}`} role="status">{notice.text}</div>}
-    <header className="hero relative px-5 pb-16 pt-12 sm:pb-20 sm:pt-16">
-      <div className="flourish flourish-left" aria-hidden="true" />
-      <div className="flourish flourish-right" aria-hidden="true" />
-      <div className="relative mx-auto max-w-3xl text-center">
-        <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-full border border-white/40 bg-white/15 backdrop-blur-sm"><Home className="size-6" strokeWidth={1.6} /></div>
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-white/80">Um novo capítulo</p>
-        <h1 className="font-display text-5xl leading-[0.96] sm:text-7xl">Chá de Casa Nova</h1>
-        <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/85 sm:text-lg">Cada escolha ajuda a transformar uma casa em lar. Selecione um presente e faça parte deste momento tão especial.</p>
-        <div className="mx-auto mt-8 flex max-w-sm items-center gap-3 rounded-full border border-white/25 bg-white/10 px-5 py-3 text-sm backdrop-blur-sm">
-          <Sparkles className="size-4 shrink-0" /><span><strong>{totalUnits - chosenUnits}</strong> disponíveis</span><span className="ml-auto text-white/70">{chosenUnits} escolhidos</span>
+    <header className="hero relative px-5 pb-14 pt-10 sm:pb-20 sm:pt-14">
+      <img src="/floral-frame.png" alt="" className="hero-flowers" aria-hidden="true" />
+      <div className="hero-panel relative mx-auto max-w-3xl px-5 py-10 text-center sm:px-12 sm:py-14">
+        <div className="monogram" aria-label="J e L"><span>J</span><i /><span>L</span></div>
+        <p className="mb-5 mt-5 text-xs font-semibold uppercase tracking-[0.32em] text-primary sm:text-sm">Um novo capítulo</p>
+        <h1 className="font-display text-5xl leading-[0.96] text-foreground sm:text-7xl">Chá de Casa Nova</h1>
+        <div className="ornament" aria-hidden="true"><span /><Heart className="size-4 fill-current" /><span /></div>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">Cada escolha ajuda a transformar uma casa em lar. Selecione um presente e faça parte deste momento tão especial.</p>
+        <div className="availability-pill mx-auto mt-8 flex max-w-sm items-center gap-3 rounded-full px-5 py-3 text-sm">
+          <Sparkles className="size-4 shrink-0 text-primary" /><span><strong>{totalUnits - chosenUnits}</strong> disponíveis</span><span className="ml-auto text-muted-foreground">{chosenUnits} escolhidos</span>
         </div>
       </div>
     </header>
@@ -120,9 +120,12 @@ export default function HomePage() {
                     : item.quantity > 1
                       ? `${remaining} ${remaining === 1 ? "disponível" : "disponíveis"}`
                       : "Disponível";
-                return <button key={item.id} type="button" disabled={unavailable} onClick={() => setSelected(item)} className={`gift-card group flex min-h-24 items-center gap-4 rounded-2xl border p-4 text-left transition ${unavailable ? "chosen" : "bg-white hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"}`}>
-                  <span className={`flex size-11 shrink-0 items-center justify-center rounded-full ${unavailable ? "bg-primary/10" : "bg-secondary group-hover:bg-primary group-hover:text-white"}`}>{unavailable ? <Check className="size-5" /> : <Gift className="size-5" />}</span>
-                  <span><span className="block font-medium leading-5">{item.name}</span><span className={`mt-1 block text-sm ${unavailable ? "text-primary/70" : "text-muted-foreground"}`}>{status}</span></span>
+                return <button key={item.id} type="button" disabled={unavailable} onClick={() => setSelected(item)} className={`gift-card group overflow-hidden rounded-2xl border text-left transition ${unavailable ? "chosen" : "bg-white hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"}`}>
+                  <span className="gift-media">
+                    <img src={`/products/${item.id}.png`} alt={item.name} loading="lazy" />
+                    <span className={`gift-badge ${unavailable ? "is-chosen" : ""}`}>{unavailable ? <Check className="size-4" /> : <Gift className="size-4" />}</span>
+                  </span>
+                  <span className="gift-copy"><span className="block font-medium leading-5">{item.name}</span><span className={`mt-1.5 block text-sm ${unavailable ? "text-primary/70" : "text-muted-foreground"}`}>{status}</span></span>
                 </button>;
               })}
             </div>
@@ -130,12 +133,12 @@ export default function HomePage() {
         })}
       </div>
     </section>
-    <footer className="border-t border-primary/10 px-5 py-10 text-center text-sm text-muted-foreground"><Home className="mx-auto mb-3 size-5 text-primary" /><p>Feito com carinho para celebrar um novo lar.</p></footer>
+    <footer className="site-footer px-5 py-12 text-center text-sm text-muted-foreground"><div className="footer-monogram">J <span /> L</div><p className="mt-3">Feito com carinho para celebrar um novo lar.</p></footer>
 
     {selected && <div className="modal-overlay" role="presentation" onMouseDown={event => event.currentTarget === event.target && setSelected(null)}>
       <section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
         <button className="modal-close" type="button" onClick={() => setSelected(null)} aria-label="Fechar"><X className="size-5" /></button>
-        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary"><Gift className="size-5" /></div>
+        <img src={`/products/${selected.id}.png`} alt="" className="modal-product-image" />
         <h2 id="dialog-title" className="font-display text-center text-3xl text-primary">Confirmar escolha</h2>
         <p className="mt-3 text-center text-base leading-6 text-muted-foreground">Você escolheu <strong className="text-foreground">{selected.name}</strong>. Informe seu nome para reservar este presente.</p>
         <label className="mt-6 block text-sm font-medium" htmlFor="guest-name">Seu nome</label>
